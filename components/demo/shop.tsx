@@ -137,12 +137,13 @@ function CartScreen(p: Props) {
       <h2 className="font-shop text-[1.6rem] text-char">Your cart</h2>
       <ul className="mt-3 divide-y divide-shop-line rounded-[10px] border border-shop-line bg-white px-3">
         {lines.map((l) => (
-          <li key={l.id} className="flex items-center gap-3 py-3">
+          <li key={l.id} className="flex flex-wrap items-center gap-x-3 gap-y-2 py-3">
             <ProductDrawing drawing={l.drawing} band={l.band} className="h-12 w-10" />
             <div className="min-w-0 flex-1">
               <p className="font-shop text-[1.05rem] text-char">{l.productTitle}</p>
               <p className="text-micro text-roast">{l.variantTitle}</p>
             </div>
+            <div className="ml-auto flex items-center gap-3">
             <div className="flex items-center rounded-md border border-shop-line">
               <button type="button" disabled={p.busy} onClick={() => p.onQty(l.id, l.quantity - 1)} className="grid min-h-11 min-w-11 place-items-center text-char" aria-label={`One less ${l.productTitle}`}>
                 −
@@ -153,6 +154,7 @@ function CartScreen(p: Props) {
               </button>
             </div>
             <span className="w-16 text-right text-label tabular-nums">{money(l.price * l.quantity)}</span>
+            </div>
           </li>
         ))}
       </ul>

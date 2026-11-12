@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "app/page.tsx"
+        ],
+        "createdAt": "2026-11-12T21:21:51.351Z",
+        "reason": "Founder picked mockup A on 2026-11-12; its reminder card has this cherry top band (the email's brand strip)"
+      }
+    ]
+  }
+}

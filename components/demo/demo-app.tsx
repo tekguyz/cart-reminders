@@ -236,7 +236,7 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
         </div>
 
         <div className="grid gap-4 lg:grid-cols-[1.55fr_1fr] lg:gap-5">
-          <div className={`flex flex-col gap-3 ${pane === "owner" ? "hidden lg:flex" : ""}`}>
+          <div className={`flex min-w-0 flex-col gap-3 ${pane === "owner" ? "hidden lg:flex" : ""}`}>
             {showClock && (
               <div className="flex flex-wrap items-center gap-3 rounded-xl border border-line bg-surface px-4 py-2.5">
                 <span className="text-label text-muted">Demo clock</span>
@@ -275,7 +275,7 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
             {pane === "email" && <ReminderEmail view={view} />}
           </div>
 
-          <div className={`flex flex-col gap-3 ${pane === "owner" ? "" : "hidden lg:flex"}`}>
+          <div className={`flex min-w-0 flex-col gap-3 ${pane === "owner" ? "" : "hidden lg:flex"}`}>
             {ownerNums && <OwnerPanel owner={ownerNums} carts={carts} currentId={view?.cart.id ?? null} />}
             <Timeline view={view} />
           </div>
