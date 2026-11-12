@@ -15,6 +15,8 @@ export type DemoState = {
   /** Ever left at checkout, even if later paid. */
   everLeft: boolean;
   orderName: string | null;
+  /** Stripe's own recovery link for the left checkout, when it made one. */
+  recoveryUrl: string | null;
 };
 
 export const INITIAL_STATE: DemoState = {
@@ -25,6 +27,7 @@ export const INITIAL_STATE: DemoState = {
   wonBack: false,
   everLeft: false,
   orderName: null,
+  recoveryUrl: null,
 };
 
 /** Hours after leaving that each reminder goes out. Then it stops. */
@@ -36,9 +39,9 @@ export function remindersSent(s: DemoState): number {
   return s.status === "reminded-1" ? 1 : s.status === "reminded-2" ? 2 : 0;
 }
 
-export function leave(s: DemoState, sessionId: string): DemoState {
+export function leave(s: DemoState, sessionId: string, recoveryUrl: string | null = null): DemoState {
   if (s.status === "paid") return s;
-  return { ...s, status: "left", leftAtMin: s.clockMin, sessionId, everLeft: true };
+  return { ...s, status: "left", leftAtMin: s.clockMin, sessionId, everLeft: true, recoveryUrl };
 }
 
 /** The demo-clock minute the next reminder is due, or null when none is left. */
@@ -72,6 +75,7 @@ export function stateToAttributes(s: DemoState): Attr[] {
     { key: "_cr_won", value: s.wonBack ? "1" : "" },
     { key: "_cr_ever_left", value: s.everLeft ? "1" : "" },
     { key: "_cr_order", value: s.orderName ?? "" },
+    { key: "_cr_recovery", value: s.recoveryUrl ?? "" },
   ];
 }
 
@@ -88,5 +92,6 @@ export function stateFromAttributes(attrs: Attr[]): DemoState {
     wonBack: get("_cr_won") === "1",
     everLeft: get("_cr_ever_left") === "1",
     orderName: get("_cr_order") || null,
+    recoveryUrl: get("_cr_recovery") || null,
   };
 }

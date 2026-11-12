@@ -31,8 +31,8 @@ export function createStripeCheckout(secretKey: string | undefined): Checkout {
     },
     async countRecentSessions(sinceUnix) {
       let n = 0;
-      for await (const _ of stripe.checkout.sessions.list({ created: { gte: sinceUnix }, limit: 100 })) {
-        if (++n >= 500) break;
+      for await (const session of stripe.checkout.sessions.list({ created: { gte: sinceUnix }, limit: 100 })) {
+        if (session && ++n >= 500) break;
       }
       return n;
     },
