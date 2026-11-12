@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* Tokens follow DESIGN.md. Change DESIGN.md first. Hex copies for the drawn
+   images live in lib/brand/marks.ts. */
+
+@theme {
+  --color-*: initial;
+  /* the app: Cart Reminders */
+  --color-paper: #f4f0e8;
+  --color-surface: #ffffff;
+  --color-sunk: #ece6da;
+  --color-line: #dcd3c3;
+  --color-ink: #221e1b;
+  --color-muted: #6a625a;
+  --color-back: #3e5747;
+  --color-back-deep: #2c4134;
+  --color-back-soft: #e4e7df;
+  --color-left: #a2702f;
+  --color-left-deep: #6b4518;
+  --color-left-soft: #f0e5d1;
+  --color-sand: #e2c79a;
+  --color-danger: #8e2f25;
+  /* the shop: Coquimba Coffee */
+  --color-cream: #f4ebdc;
+  --color-bone: #fbf6ee;
+  --color-char: #2a2320;
+  --color-roast: #5e5148;
+  --color-cherry: #8e3a2f;
+  --color-shade: #4a5c47;
+  --color-gold: #b58a43;
+  --color-clay: #a3684a;
+  --color-sky: #6c8290;
+  --color-shop-line: #e3d5be;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+
+  --font-display: var(--font-instrument-serif), Georgia, serif;
+  --font-shop: var(--font-gloock), Georgia, serif;
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
+
+  --text-*: initial;
+  --text-display: 2.75rem;
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.01em;
+  --text-headline: 1.875rem;
+  --text-headline--line-height: 1.08;
+  --text-title: 1.1875rem;
+  --text-title--line-height: 1.25;
+  --text-body: 1rem;
+  --text-body--line-height: 1.55;
+  --text-label: 0.875rem;
+  --text-label--line-height: 1.4;
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.35;
+
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --text-display: 4rem;
+  }
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-back);
+  outline-offset: 2px;
+}
+
+/* Motion (DESIGN.md, Motion). Content is visible by default; these only
+   run when the visitor's system allows motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .arrive {
+    animation: arrive 280ms var(--ease-soft) both;
+  }
+  .hairline-draw {
+    transform-origin: left;
+    animation: hairline 600ms var(--ease-soft) both;
+  }
+}
+
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hairline {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
