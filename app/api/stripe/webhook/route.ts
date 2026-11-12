@@ -1,8 +1,9 @@
 import Stripe from "stripe";
+import { webhookMayComplete } from "@/lib/checkout/webhook-wait";
 import { getService } from "@/lib/demo/server";
 
 // Backup path for writing the Shopify order when a checkout completes. The
-// main path is the page's own onComplete call; both are idempotent. Vercel
+// main path is the page's own onComplete call; it waits two minutes so it never races the page (lib/checkout/webhook-wait.ts). Vercel
 // blocks webhooks to protected preview URLs, so this only runs on production.
 
 export async function POST(req: Request) {
@@ -16,6 +17,8 @@ export async function POST(req: Request) {
     return new Response("Bad signature", { status: 400 });
   }
   if (event.type === "checkout.session.completed") {
+    // Too soon: the page is still writing the order. Stripe retries later.
+    if (!webhookMayComplete(event.created, Math.floor(Date.now() / 1000))) return new Response("Not yet", { status: 503 });
     await getService().completeOrder(event.data.object.id, "127.0.0.1");
   }
   return Response.json({ received: true });

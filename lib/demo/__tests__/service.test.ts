@@ -74,6 +74,17 @@ describe("demo service", () => {
     expect(owner.wonBack).toBe(ownerNumbers(SAMPLE_HISTORY, []).wonBack + 1);
   });
 
+  it("refuses to change or check out a cart that is already paid", async () => {
+    const { cartId } = await leftCart();
+    const again = await svc.startCheckout(cartId, IP);
+    if ("error" in again) throw new Error(again.error);
+    checkout.pay(again.sessionId);
+    const paid = ok(await svc.completeOrder(again.sessionId, IP));
+    expect(await svc.changeQty(cartId, paid.cart.lines[0].id, 5, IP)).toEqual({ error: "paid" });
+    expect(await svc.startCheckout(cartId, IP)).toEqual({ error: "paid" });
+    expect((await svc.loadCarts([cartId], IP)).carts[0].cart.lines[0].quantity).toBe(1);
+  });
+
   it("refuses to complete an unpaid session", async () => {
     const { sessionId } = await leftCart();
     expect(await svc.completeOrder(sessionId, IP)).toEqual({ error: "not-paid" });

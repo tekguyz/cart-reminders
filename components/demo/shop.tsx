@@ -22,11 +22,14 @@ type Props = {
   onCheckout: () => void;
   onLeave: () => void;
   onPaid: (sessionId: string) => void;
+  retryPay: string | null;
 };
 
 /** The made-up store, drawn in a small browser frame (DESIGN.md). */
 export function Shop(p: Props) {
-  const count = p.view?.cart.lines.reduce((t, l) => t + l.quantity, 0) ?? 0;
+  // A paid cart is done: the shop shows an empty cart until the next Add.
+  const open = p.view && p.view.state.status !== "paid" ? p.view.cart.lines : [];
+  const count = open.reduce((t, l) => t + l.quantity, 0);
   return (
     <section aria-label={`${BRAND.name}, the sample shop`} className="overflow-hidden rounded-xl border border-line bg-bone">
       <div className="flex items-center gap-2 border-b border-line bg-[#EFE9DE] px-3 py-2">
@@ -51,6 +54,11 @@ export function Shop(p: Props) {
       {p.message && (
         <p role="alert" className="border-b border-shop-line bg-left-soft px-5 py-2 text-label text-left-deep">
           {p.message}
+          {p.retryPay && (
+            <button type="button" disabled={p.busy} onClick={() => p.onPaid(p.retryPay!)} className="ml-2 inline-flex min-h-11 items-center font-semibold underline underline-offset-4">
+              Try again
+            </button>
+          )}
         </p>
       )}
 
@@ -120,7 +128,7 @@ function ProductCard({ product, view, busy, onAdd }: { product: Product; view: C
 }
 
 function CartScreen(p: Props) {
-  const lines = p.view?.cart.lines ?? [];
+  const lines = p.view && p.view.state.status !== "paid" ? p.view.cart.lines : [];
   if (lines.length === 0) {
     return (
       <div className="px-5 py-12 text-center">

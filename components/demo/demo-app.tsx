@@ -37,6 +37,7 @@ const MESSAGES: Record<Failure["error"] | "bad-input" | "failed", string> = {
   "not-found": "That cart has expired. Starting a fresh one.",
   "not-paid": "The payment did not go through.",
   "no-checkout": "Start checkout first.",
+  paid: "This cart is already paid. Add something to start a new one.",
   "bad-input": "Something went wrong. Try again.",
   failed: "The store did not answer. Try again in a moment.",
 };
@@ -55,6 +56,8 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [tour, setTour] = useState<Tour>(noTour);
+  // Paid, but the order was not written yet: keep the session so the shopper can retry.
+  const [retryPay, setRetryPay] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     const s = store.current!;
@@ -112,15 +115,18 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
     void loadCarts(store.current!.getCartIds()).then((r) => setOwner(r.owner));
   };
 
-  async function run<T>(fn: () => Promise<T | { error: keyof typeof MESSAGES }>, ok: (v: T) => void) {
+  async function run<T>(fn: () => Promise<T | { error: keyof typeof MESSAGES }>, ok: (v: T) => void, failed?: () => void) {
     setBusy(true);
     setMessage(null);
     try {
       const r = await fn();
-      if (isFailure(r)) setMessage(MESSAGES[r.error]);
-      else ok(r as T);
+      if (isFailure(r)) {
+        setMessage(MESSAGES[r.error]);
+        failed?.();
+      } else ok(r as T);
     } catch {
       setMessage(MESSAGES.failed);
+      failed?.();
     } finally {
       setBusy(false);
     }
@@ -172,12 +178,14 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
       () => (fake ? fakePay(sessionId) : completeOrder(sessionId)),
       (v: CartView) => {
         accept(v);
+        setRetryPay(null);
         setCheckout(null);
         setScreen("paid");
         const wide = window.matchMedia("(min-width: 64rem)").matches;
         setTour((t) => ({ ...t, paidBack: t.paidBack || v.state.wonBack, sawOrder: t.sawOrder || wide }));
         notice("owner");
       },
+      () => setRetryPay(sessionId),
     );
 
   const onReset = () => {
@@ -187,6 +195,7 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
     setScreen("shop");
     setPane("shop");
     setMessage(null);
+    setRetryPay(null);
     setTour(noTour);
   };
 
@@ -269,6 +278,7 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
                   onCheckout={() => view && begin(view.cart.id)}
                   onLeave={onLeave}
                   onPaid={onPaid}
+                  retryPay={retryPay}
                 />
               )}
             </div>

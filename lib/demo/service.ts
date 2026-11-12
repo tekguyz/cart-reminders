@@ -10,7 +10,7 @@ import { INITIAL_STATE, type DemoState, leave, markPaid, skipAhead, stateFromAtt
 // Checkout interfaces. Testable with the fakes; no Next.js here.
 
 export type CartView = { cart: Cart; state: DemoState; token: string | null };
-export type Failure = { error: "busy" | "empty" | "not-found" | "not-paid" | "no-checkout" };
+export type Failure = { error: "busy" | "empty" | "not-found" | "not-paid" | "no-checkout" | "paid" };
 
 type Deps = { shop: Shop; admin: ShopAdmin; checkout: Checkout; secret: string; now?: () => number };
 
@@ -41,13 +41,17 @@ export function createService({ shop, admin, checkout, secret, now = Date.now }:
       return save(cart.id, INITIAL_STATE, ip);
     },
 
-    async changeQty(cartId: string, lineId: string, quantity: number, ip: string): Promise<CartView> {
+    async changeQty(cartId: string, lineId: string, quantity: number, ip: string): Promise<CartView | Failure> {
+      const v = await load(cartId, ip);
+      if (!v) return { error: "not-found" };
+      if (v.state.status === "paid") return { error: "paid" };
       return view(await shop.updateLine(cartId, lineId, Math.max(0, Math.min(20, quantity)), ip));
     },
 
     async startCheckout(cartId: string, ip: string): Promise<(CartView & { sessionId: string; clientSecret: string }) | Failure> {
       const v = await load(cartId, ip);
       if (!v) return { error: "not-found" };
+      if (v.state.status === "paid") return { error: "paid" };
       if (v.cart.lines.length === 0) return { error: "empty" };
       if (overCap(await checkout.countRecentSessions(Math.floor(now() / 1000) - 3600), SESSIONS_PER_HOUR)) return { error: "busy" };
       const { sessionId, clientSecret } = await checkout.start(v.cart);
