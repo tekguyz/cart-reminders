@@ -35,7 +35,6 @@ export default function Home() {
       <main id="main" className="flex-1">
         <section className="mx-auto grid max-w-[76rem] items-center gap-10 px-4 pt-12 pb-14 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:pt-20 lg:pb-20">
           <div>
-            <p className="mb-4 text-label font-semibold tracking-[0.04em] text-back">Online store · ordering · cart reminders</p>
             <h1 className="font-display text-display">
               The shopper left. <em className="text-back">The cart came back.</em>
             </h1>
@@ -83,9 +82,9 @@ export default function Home() {
           <div className="mx-auto flex max-w-[76rem] flex-col items-start gap-6 px-4 py-14 sm:px-8 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="font-display text-headline lg:text-[2.5rem]">Shop, leave, come back.</p>
-              <p className="mt-2 max-w-[44ch] text-[#C9C1B5]">Play the shopper and the store owner at {BRAND.name}, a made-up roaster in Miami.</p>
+              <p className="mt-2 max-w-[44ch] text-paper-dim">Play the shopper and the store owner at {BRAND.name}, a made-up roaster in Miami.</p>
             </div>
-            <Link href="/demo" className={`${primaryButton} bg-sand text-ink hover:bg-[#d6b985]`}>
+            <Link href="/demo" className={`${primaryButton} bg-sand text-ink hover:bg-sand-deep`}>
               Try the demo
             </Link>
           </div>
@@ -122,7 +121,7 @@ function Stage() {
           { name: "Jinotega, whole bean", q: 1, band: colors.sky },
           { name: "Madriz natural", q: 2, band: colors.cherry },
         ].map((r, i) => (
-          <div key={r.name} className={`flex items-center gap-3 py-2 text-label ${i ? "border-t border-[#EEE8DC]" : ""}`}>
+          <div key={r.name} className={`flex items-center gap-3 py-2 text-label ${i ? "border-t border-hair" : ""}`}>
             <ProductDrawing drawing="bag" band={r.band} className="h-11 w-9" />
             {r.name}
             <span className="ml-auto text-muted">× {r.q}</span>

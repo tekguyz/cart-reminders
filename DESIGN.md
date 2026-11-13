@@ -24,6 +24,12 @@ colors:
   gold: "#B58A43"
   clay: "#A3684A"
   sky: "#6C8290"
+  hair: "#EEE8DC"
+  sand-deep: "#D6B985"
+  paper-dim: "#E0D9CD"
+  ink-soft: "#38322D"
+  shop-hair: "#F0E7D8"
+  cherry-deep: "#743026"
 typography:
   display: { fontFamily: "Instrument Serif", fontSize: "2.75rem (4rem from 1024px)", fontWeight: 400, lineHeight: 1 }
   shop: { fontFamily: "Gloock", use: "the store's name, product names, the reminder email headline" }
@@ -44,7 +50,8 @@ Two things on one page. **Cart Reminders** (the app) is calm ink on warm paper w
 2. **Ochre** (`left`) means one thing: a cart left at checkout, and its reminders.
 3. The shop's own colors (`cherry`, `char`, `cream`, `bone` and the label bands `sky`, `clay`, `gold`, `cherry`, `shade`) stay inside the shop and the reminder email.
 4. `danger` only on error lines.
-5. Light theme only. The demo banner is the one ink band.
+5. `hair` and `shop-hair` are row dividers, `paper-dim` is text on the ink band, `sand-deep` and `cherry-deep` are hover shades. Selection is `sand`, scrollbars and the caret come from the palette.
+6. Light theme only. The demo banner is the one ink band.
 
 ## Type
 

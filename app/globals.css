@@ -20,6 +20,10 @@
   --color-left-soft: #f0e5d1;
   --color-sand: #e2c79a;
   --color-danger: #8e2f25;
+  --color-hair: #eee8dc;
+  --color-sand-deep: #d6b985;
+  --color-paper-dim: #e0d9cd;
+  --color-ink-soft: #38322d;
   /* the shop: Coquimba Coffee */
   --color-cream: #f4ebdc;
   --color-bone: #fbf6ee;
@@ -31,6 +35,8 @@
   --color-clay: #a3684a;
   --color-sky: #6c8290;
   --color-shop-line: #e3d5be;
+  --color-shop-hair: #f0e7d8;
+  --color-cherry-deep: #743026;
   --color-white: #ffffff;
   --color-transparent: transparent;
 
@@ -102,6 +108,19 @@ summary {
 }
 .skip-link:focus-visible {
   top: 1rem;
+}
+
+/* Browser surfaces: selection, caret and scrollbars come from the palette. */
+::selection {
+  background: var(--color-sand);
+  color: var(--color-ink);
+}
+input,
+textarea {
+  caret-color: var(--color-back);
+}
+html {
+  scrollbar-color: var(--color-line) var(--color-paper);
 }
 
 :focus-visible {

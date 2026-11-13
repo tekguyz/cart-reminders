@@ -38,11 +38,11 @@ export function Shop(p: Props) {
   const count = open.reduce((t, l) => t + l.quantity, 0);
   return (
     <section aria-label={`${BRAND.name}, the sample shop`} className="overflow-hidden rounded-xl border border-line bg-bone">
-      <div className="flex items-center gap-2 border-b border-line bg-[#EFE9DE] px-3 py-2">
+      <div className="flex items-center gap-2 border-b border-line bg-sunk px-3 py-2">
         <span aria-hidden className="flex gap-1.5">
-          <i className="size-2.5 rounded-full bg-[#D3CBBB]" />
-          <i className="size-2.5 rounded-full bg-[#D3CBBB]" />
-          <i className="size-2.5 rounded-full bg-[#D3CBBB]" />
+          <i className="size-2.5 rounded-full bg-line" />
+          <i className="size-2.5 rounded-full bg-line" />
+          <i className="size-2.5 rounded-full bg-line" />
         </span>
         <span className="flex-1 truncate rounded-md bg-white px-2.5 py-1 text-micro text-muted">{BRAND.address}{p.screen === "shop" ? "" : p.screen === "cart" ? "/cart" : "/checkout"}</span>
       </div>
@@ -51,7 +51,7 @@ export function Shop(p: Props) {
         <button type="button" onClick={() => p.onScreen("shop")} className="min-h-11 hover:opacity-80" aria-label={`${BRAND.name}, back to the shop`}>
           <StoreLogo />
         </button>
-        <button type="button" onClick={() => p.onScreen("cart")} className="inline-flex min-h-11 items-center gap-2 text-label font-semibold text-char underline-offset-4 hover:underline" aria-label={`Cart, ${count} items`}>
+        <button type="button" onClick={() => p.onScreen("cart")} className="inline-flex min-h-11 items-center gap-2 text-label font-semibold text-char underline-offset-4 hover:underline" aria-label={`Cart, ${count} ${count === 1 ? "item" : "items"}`}>
           Cart
           <span className="inline-grid min-w-5 place-items-center rounded-full bg-cherry px-1.5 text-micro text-white">{count}</span>
         </button>
@@ -84,8 +84,8 @@ function Catalog({ products, view, busy, onAdd }: { products: Product[]; view: C
         <p className="max-w-[30ch] text-label text-roast">{BRAND.intro}</p>
       </div>
       <svg aria-hidden viewBox="0 0 600 34" preserveAspectRatio="none" className="block h-8 w-full bg-cream">
-        <path d="M0 34V26h60l50-18 40 18h100l40-12 30 8 40-18 50 22h190v8z" fill="#FBF6EE" />
-        <path d="M0 26h60l50-18 40 18h100l40-12 30 8 40-18 50 22h190" fill="none" stroke="#2A2320" strokeWidth="1.2" />
+        <path d="M0 34V26h60l50-18 40 18h100l40-12 30 8 40-18 50 22h190v8z" fill="var(--color-bone)" />
+        <path d="M0 26h60l50-18 40 18h100l40-12 30 8 40-18 50 22h190" fill="none" stroke="var(--color-char)" strokeWidth="1.2" />
       </svg>
       <ul className="grid grid-cols-2 gap-3 p-3 sm:gap-3.5 sm:p-5 xl:grid-cols-3">
         {products.map((product) => (
@@ -179,7 +179,7 @@ function CartScreen(p: Props) {
         <span className="text-roast">{pickupOnly ? "Pickup at the roastery (pinolillo and rosquillas are made here)." : "Pickup or shipping, picked at checkout."}</span>
         <span className="font-semibold tabular-nums">{money(p.view?.cart.subtotal ?? 0)}</span>
       </div>
-      <button type="button" disabled={p.busy} onClick={p.onCheckout} className={`${primaryButton} mt-5 w-full bg-cherry hover:bg-[#743026]`}>
+      <button type="button" disabled={p.busy} onClick={p.onCheckout} className={`${primaryButton} mt-5 w-full bg-cherry hover:bg-cherry-deep`}>
         {p.busy ? "Opening checkout…" : "Check out"}
       </button>
     </div>

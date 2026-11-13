@@ -257,7 +257,7 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
                 <span aria-hidden className="hairline-draw hidden h-0.5 min-w-10 flex-1 bg-left/60 sm:block" />
                 <span className="text-micro text-muted">{next !== null ? `Next reminder ${untilLabel(view!.state.clockMin, next)}` : view!.state.status === "paid" ? "Paid. Reminders stopped." : "No more reminders."}</span>
                 <button type="button" disabled={busy || next === null} onClick={onSkip} className={`${secondaryButton} ml-auto`}>
-                  Skip ahead ›
+                  Skip ahead
                 </button>
               </div>
             )}
