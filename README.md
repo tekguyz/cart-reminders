@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/banner.svg" alt="Cart Reminders" width="100%"></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-demo%20built-3E5747?style=flat&labelColor=F4F0E8" alt="Status: demo built">
+  <img src="https://img.shields.io/badge/status-live%20demo-3E5747?style=flat&labelColor=F4F0E8" alt="Status: live demo">
   <img src="https://img.shields.io/badge/Next.js-16-221E1B?style=flat&labelColor=F4F0E8" alt="Next.js 16">
   <img src="https://img.shields.io/badge/store-Shopify-3E5747?style=flat&labelColor=F4F0E8" alt="Store: Shopify">
   <img src="https://img.shields.io/badge/tests-Vitest-A2702F?style=flat&labelColor=F4F0E8" alt="Tests: Vitest">
@@ -9,16 +9,16 @@
 
 **An online store whose left carts come back: a shop built for the business, online ordering and payment, and a friendly reminder when a shopper leaves at checkout.**
 
-Not deployed yet. Once it is: Live site · press Try the demo.
+[Live site](https://cart-reminders.vercel.app) · press **Try the demo**.
 
 ## Status
 
 | Row | What it holds |
 |---|---|
-| Phase | Demo built, not deployed |
-| Shipped | Landing page and the full demo, running on the stand-in store |
-| Next | Connect the real Shopify dev store and Stripe test keys, then deploy (#1) |
-| Updated | 2026-11-12 |
+| Phase | Live demo |
+| Shipped | Landing page and the full demo, on a real Shopify development store and Stripe test mode, at cart-reminders.vercel.app |
+| Next | Showcase pictures and video, then the site and portfolio follow-up |
+| Updated | 2026-11-13 |
 
 ## What it does
 
