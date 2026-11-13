@@ -1,0 +1,21 @@
+{
+  "_note": "The Coquimba Coffee catalog: sample data for the demo. Prices are in cents. `npm run seed:shopify` loads it into the Shopify development store; SHOP_MODE=fake reads it directly. Tasting notes stay modest; regions and varieties are general knowledge about Nicaraguan coffee (checked 2026-11-12). No real farm or cooperative names.",
+  "products": [
+    { "handle": "jinotega", "title": "Jinotega", "region": "Jinotega", "notes": "Washed Caturra · milk chocolate, yellow fruit", "pickupOnly": false, "band": "#6C8290", "drawing": "bag",
+      "variants": [ { "title": "12 oz · Whole bean", "price": 1800 }, { "title": "12 oz · Ground", "price": 1800 }, { "title": "2 lb · Whole bean", "price": 4200 } ] },
+    { "handle": "matagalpa", "title": "Matagalpa", "region": "Matagalpa", "notes": "Washed Bourbon · cocoa, caramel", "pickupOnly": false, "band": "#A3684A", "drawing": "bag",
+      "variants": [ { "title": "12 oz · Whole bean", "price": 1700 }, { "title": "12 oz · Ground", "price": 1700 }, { "title": "2 lb · Whole bean", "price": 4000 } ] },
+    { "handle": "nueva-segovia", "title": "Nueva Segovia", "region": "Dipilto, Nueva Segovia", "notes": "Honey Pacamara · floral, stone fruit", "pickupOnly": false, "band": "#B58A43", "drawing": "bag",
+      "variants": [ { "title": "12 oz · Whole bean", "price": 2200 }, { "title": "12 oz · Ground", "price": 2200 } ] },
+    { "handle": "madriz", "title": "Madriz", "region": "Madriz", "notes": "Natural Catuaí · red berry, cacao", "pickupOnly": false, "band": "#8E3A2F", "drawing": "bag",
+      "variants": [ { "title": "12 oz · Whole bean", "price": 2000 }, { "title": "12 oz · Ground", "price": 2000 } ] },
+    { "handle": "house-espresso", "title": "House espresso", "region": null, "notes": "Our daily shot, dark and sweet", "pickupOnly": false, "band": "#2A2320", "drawing": "bag",
+      "variants": [ { "title": "12 oz · Whole bean", "price": 1600 }, { "title": "12 oz · Ground", "price": 1600 }, { "title": "2 lb · Whole bean", "price": 3800 } ] },
+    { "handle": "decaf", "title": "Decaf", "region": "Matagalpa", "notes": "Water-processed · soft cocoa, almond", "pickupOnly": false, "band": "#4A5C47", "drawing": "bag",
+      "variants": [ { "title": "12 oz · Whole bean", "price": 1800 }, { "title": "12 oz · Ground", "price": 1800 } ] },
+    { "handle": "pinolillo", "title": "Pinolillo", "region": null, "notes": "Toasted corn and cacao, made fresh at the roastery", "pickupOnly": true, "band": "#4A5C47", "drawing": "cup",
+      "variants": [ { "title": "16 oz cup", "price": 500 } ] },
+    { "handle": "rosquillas", "title": "Rosquillas", "region": null, "notes": "Baked corn and cheese rings, a bag of twelve", "pickupOnly": true, "band": "#A3684A", "drawing": "rings",
+      "variants": [ { "title": "Bag of 12", "price": 800 } ] }
+  ]
+}
