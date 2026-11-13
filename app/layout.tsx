@@ -29,7 +29,12 @@ export const viewport: Viewport = { themeColor: "#f4f0e8" };
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${instrument.variable} ${gloock.variable} ${hanken.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col text-body text-ink">{children}</body>
+      <body className="flex min-h-full flex-col text-body text-ink">
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

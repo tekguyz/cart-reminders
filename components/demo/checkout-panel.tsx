@@ -2,6 +2,7 @@
 
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js";
 import { loadStripe, type Stripe } from "@stripe/stripe-js";
+import { useEffect, useMemo, useRef } from "react";
 import { BRAND } from "@/lib/brand";
 import { secondaryButton, shopButton } from "../ui";
 
@@ -18,6 +19,14 @@ function stripe() {
 /** Stripe's embedded checkout, in test mode, with the demo's "leave" door beside it. */
 export function CheckoutPanel({ checkout, onLeave, onPaid, busy }: { checkout: OpenCheckout; onLeave: () => void; onPaid: (sessionId: string) => void; busy: boolean }) {
   const s = checkout.fake ? null : stripe();
+  // Stripe reads onComplete once and warns if it changes, so the options stay
+  // the same object for one session and the call goes through a ref.
+  const paid = useRef(onPaid);
+  useEffect(() => {
+    paid.current = onPaid;
+  });
+  const { clientSecret, sessionId } = checkout;
+  const options = useMemo(() => ({ clientSecret, onComplete: () => paid.current(sessionId) }), [clientSecret, sessionId]);
   return (
     <div className="px-3 py-4 sm:px-5">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3 rounded-[10px] border border-left/40 bg-left-soft px-3 py-2.5">
@@ -38,7 +47,7 @@ export function CheckoutPanel({ checkout, onLeave, onPaid, busy }: { checkout: O
         </div>
       ) : s ? (
         <div className="overflow-hidden rounded-[10px] bg-white">
-          <EmbeddedCheckoutProvider key={checkout.clientSecret} stripe={s} options={{ clientSecret: checkout.clientSecret, onComplete: () => onPaid(checkout.sessionId) }}>
+          <EmbeddedCheckoutProvider key={checkout.clientSecret} stripe={s} options={options}>
             <EmbeddedCheckout />
           </EmbeddedCheckoutProvider>
         </div>

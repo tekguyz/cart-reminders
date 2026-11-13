@@ -45,9 +45,9 @@ export function OwnerPanel({ owner, carts, currentId }: { owner: OwnerNumbers; c
       </div>
       <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
         {nums.map(([label, n, cls]) => (
-          <div key={label} className={`rounded-[9px] p-2.5 ${cls}`}>
-            <dd className="font-display text-[1.9rem] leading-none tabular-nums">{n}</dd>
+          <div key={label} className={`flex flex-col-reverse rounded-[9px] p-2.5 ${cls}`}>
             <dt className="mt-1 text-micro opacity-80">{label}</dt>
+            <dd className="font-display text-[1.9rem] leading-none tabular-nums">{n}</dd>
           </div>
         ))}
       </dl>

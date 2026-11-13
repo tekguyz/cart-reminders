@@ -1,11 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { BRAND } from "@/lib/brand";
 import type { CartView } from "@/lib/demo/service";
 import type { Product } from "@/lib/shopify/types";
 import { ProductDrawing, StoreLogo, money, primaryButton, shopButton } from "../ui";
-import { CheckoutPanel, type OpenCheckout } from "./checkout-panel";
+import type { OpenCheckout } from "./checkout-panel";
+
+// Stripe's code loads only when checkout opens, not with the shop.
+const CheckoutPanel = dynamic(() => import("./checkout-panel").then((m) => m.CheckoutPanel), {
+  loading: () => <p className="px-5 py-10 text-center text-label text-roast">Opening checkout…</p>,
+});
 
 export type ShopScreen = "shop" | "cart" | "checkout" | "paid";
 
@@ -42,10 +48,10 @@ export function Shop(p: Props) {
       </div>
 
       <div className="flex items-center justify-between border-b border-shop-line px-4 py-3 sm:px-5">
-        <button type="button" onClick={() => p.onScreen("shop")} className="min-h-11" aria-label={`${BRAND.name}, back to the shop`}>
+        <button type="button" onClick={() => p.onScreen("shop")} className="min-h-11 hover:opacity-80" aria-label={`${BRAND.name}, back to the shop`}>
           <StoreLogo />
         </button>
-        <button type="button" onClick={() => p.onScreen("cart")} className="inline-flex min-h-11 items-center gap-2 text-label font-semibold text-char" aria-label={`Cart, ${count} items`}>
+        <button type="button" onClick={() => p.onScreen("cart")} className="inline-flex min-h-11 items-center gap-2 text-label font-semibold text-char underline-offset-4 hover:underline" aria-label={`Cart, ${count} items`}>
           Cart
           <span className="inline-grid min-w-5 place-items-center rounded-full bg-cherry px-1.5 text-micro text-white">{count}</span>
         </button>
@@ -156,7 +162,10 @@ function CartScreen(p: Props) {
               <button type="button" disabled={p.busy} onClick={() => p.onQty(l.id, l.quantity - 1)} className="grid min-h-11 min-w-11 place-items-center text-char" aria-label={`One less ${l.productTitle}`}>
                 −
               </button>
-              <span className="min-w-6 text-center text-label tabular-nums" aria-label={`${l.quantity} in the cart`}>{l.quantity}</span>
+              <span className="min-w-6 text-center text-label tabular-nums">
+                {l.quantity}
+                <span className="sr-only"> in the cart</span>
+              </span>
               <button type="button" disabled={p.busy} onClick={() => p.onQty(l.id, l.quantity + 1)} className="grid min-h-11 min-w-11 place-items-center text-char" aria-label={`One more ${l.productTitle}`}>
                 +
               </button>

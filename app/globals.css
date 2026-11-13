@@ -63,6 +63,7 @@
 }
 
 html {
+  color-scheme: light;
   background: var(--color-paper);
   color: var(--color-ink);
   -webkit-text-size-adjust: 100%;
@@ -71,6 +72,36 @@ html {
 body {
   font-family: var(--font-sans);
   background: var(--color-paper);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+a,
+button,
+select,
+summary {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The skip link: hidden until a keyboard user tabs to it. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 50;
+  border-radius: 10px;
+  background: var(--color-ink);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+}
+.skip-link:focus-visible {
+  top: 1rem;
 }
 
 :focus-visible {

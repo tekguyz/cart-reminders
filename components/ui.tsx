@@ -18,7 +18,7 @@ export function Mark({ svg, className }: { svg: string; className: string }) {
 
 export function ProductLogo({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 text-[1.0625rem] font-bold tracking-tight ${className}`}>
+    <span translate="no" className={`inline-flex items-center gap-2.5 text-[1.0625rem] font-bold tracking-tight ${className}`}>
       <Mark svg={PRODUCT_MARK_SVG} className="size-8" />
       {siteName}
     </span>
@@ -27,7 +27,7 @@ export function ProductLogo({ className = "" }: { className?: string }) {
 
 export function StoreLogo({ className = "", size = "size-7" }: { className?: string; size?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2 font-shop text-[1.3rem] leading-none text-char ${className}`}>
+    <span translate="no" className={`inline-flex items-center gap-2 font-shop text-[1.3rem] leading-none text-char ${className}`}>
       <Mark svg={STORE_MARK_SVG} className={size} />
       {BRAND.name}
     </span>
