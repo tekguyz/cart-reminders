@@ -17,7 +17,7 @@
 |---|---|
 | Phase | Live demo |
 | Shipped | Landing page and the full demo, on a real Shopify development store and Stripe test mode, at cart-reminders.vercel.app |
-| Next | Showcase pictures and video, then the site and portfolio follow-up |
+| Next | Minor fixes in #3 |
 | Updated | 2026-11-13 |
 
 ## What it does
