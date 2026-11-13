@@ -51,7 +51,7 @@ export function Shop(p: Props) {
         <button type="button" onClick={() => p.onScreen("shop")} className="min-h-11 hover:opacity-80" aria-label={`${BRAND.name}, back to the shop`}>
           <StoreLogo />
         </button>
-        <button type="button" onClick={() => p.onScreen("cart")} className="inline-flex min-h-11 items-center gap-2 text-label font-semibold text-char underline-offset-4 hover:underline" aria-label={`Cart, ${count} items`}>
+        <button type="button" onClick={() => p.onScreen("cart")} className="inline-flex min-h-11 items-center gap-2 text-label font-semibold text-char underline-offset-4 hover:underline" aria-label={`Cart, ${count} ${count === 1 ? "item" : "items"}`}>
           Cart
           <span className="inline-grid min-w-5 place-items-center rounded-full bg-cherry px-1.5 text-micro text-white">{count}</span>
         </button>
@@ -84,8 +84,8 @@ function Catalog({ products, view, busy, onAdd }: { products: Product[]; view: C
         <p className="max-w-[30ch] text-label text-roast">{BRAND.intro}</p>
       </div>
       <svg aria-hidden viewBox="0 0 600 34" preserveAspectRatio="none" className="block h-8 w-full bg-cream">
-        <path d="M0 34V26h60l50-18 40 18h100l40-12 30 8 40-18 50 22h190v8z" fill="#FBF6EE" />
-        <path d="M0 26h60l50-18 40 18h100l40-12 30 8 40-18 50 22h190" fill="none" stroke="#2A2320" strokeWidth="1.2" />
+        <path d="M0 34V26h60l50-18 40 18h100l40-12 30 8 40-18 50 22h190v8z" fill="var(--color-bone)" />
+        <path d="M0 26h60l50-18 40 18h100l40-12 30 8 40-18 50 22h190" fill="none" stroke="var(--color-char)" strokeWidth="1.2" />
       </svg>
       <ul className="grid grid-cols-2 gap-3 p-3 sm:gap-3.5 sm:p-5 xl:grid-cols-3">
         {products.map((product) => (
