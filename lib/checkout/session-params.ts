@@ -17,7 +17,7 @@ export function buildSessionParams(cart: Cart, { email, expiresAt, pickupLabel }
     shipping_rate_data: { type: "fixed_amount", display_name, fixed_amount: { amount, currency } },
   });
   return {
-    ui_mode: "embedded",
+    ui_mode: "embedded_page",
     redirect_on_completion: "never",
     mode: "payment",
     customer_email: email,

@@ -20,7 +20,7 @@ const opts = { email: "dana.sample@coquimba.example", expiresAt: 1_900_000_000, 
 describe("checkout session params", () => {
   it("is embedded, never redirects, recovers, and carries the cart", () => {
     const p = buildSessionParams(cart([line({})]), opts);
-    expect(p).toMatchObject({ ui_mode: "embedded", redirect_on_completion: "never", mode: "payment", customer_email: opts.email, expires_at: opts.expiresAt, metadata: { cart_id: "gid://shopify/Cart/abc" } });
+    expect(p).toMatchObject({ ui_mode: "embedded_page", redirect_on_completion: "never", mode: "payment", customer_email: opts.email, expires_at: opts.expiresAt, metadata: { cart_id: "gid://shopify/Cart/abc" } });
     expect(p.after_expiration).toEqual({ recovery: { enabled: true } });
   });
 
