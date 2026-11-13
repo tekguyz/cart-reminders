@@ -4,7 +4,7 @@
 // owner's side. Rules live in lib/; carts live in Shopify; this file holds
 // only what is on screen. Cart IDs are kept in the page's own storage (ADR 0002).
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { addToCart, changeQty, completeOrder, fakePay, leaveCheckout, loadCarts, skipAhead, startCheckout } from "@/app/demo/actions";
 import { BRAND } from "@/lib/brand";
 import { clockLabel, untilLabel } from "@/lib/demo/clock";
@@ -33,9 +33,9 @@ const tourSteps: [keyof Tour, string][] = [
 
 const MESSAGES: Record<Failure["error"] | "bad-input" | "failed", string> = {
   busy: "The demo is busy right now. Try again in a little while.",
-  empty: "The cart is empty.",
+  empty: "The cart is empty. Add something first.",
   "not-found": "That cart has expired. Starting a fresh one.",
-  "not-paid": "The payment did not go through.",
+  "not-paid": "The payment did not go through. Try the test card again.",
   "no-checkout": "Start checkout first.",
   paid: "This cart is already paid. Add something to start a new one.",
   "bad-input": "Something went wrong. Try again.",
@@ -207,12 +207,16 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
 
   const next = view ? nextReminderAtMin(view.state) : null;
   const showClock = !!view && view.state.leftAtMin !== null;
-  const ownerNums = useMemo(() => owner, [owner]);
 
   const tabBtn = (p: Pane, label: string, cls = "") => (
-    <button key={p} type="button" role="tab" aria-selected={pane === p} onClick={() => choose(p)} className={`relative inline-flex min-h-11 items-center gap-2 rounded-lg px-4 text-label font-semibold ${pane === p ? "bg-ink text-white" : "text-muted hover:bg-sunk"} ${cls}`}>
+    <button key={p} type="button" aria-pressed={pane === p} onClick={() => choose(p)} className={`relative inline-flex min-h-11 items-center gap-2 rounded-lg px-4 text-label font-semibold ${pane === p ? "bg-ink text-white" : "text-muted hover:bg-sunk"} ${cls}`}>
       {label}
-      {unseen === p && <i aria-label="new" className="size-2 rounded-full bg-left" />}
+      {unseen === p && (
+        <>
+          <i aria-hidden className="size-2 rounded-full bg-left" />
+          <span className="sr-only">, new</span>
+        </>
+      )}
     </button>
   );
 
@@ -238,7 +242,7 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
       </div>
 
       <main id="main" className="mx-auto w-full max-w-[90rem] flex-1 px-3 pt-4 pb-16 sm:px-6">
-        <div role="tablist" aria-label="Demo screens" className="mb-3 flex gap-1 lg:hidden">
+        <div role="group" aria-label="Demo screens" className="mb-3 flex gap-1 lg:hidden">
           {tabBtn("shop", "Shop")}
           {tabBtn("email", `${BRAND.shopperName}'s email`)}
           {tabBtn("owner", "Store owner")}
@@ -257,7 +261,7 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
                 </button>
               </div>
             )}
-            <div role="tablist" aria-label="Shopper screens" className="hidden gap-1 lg:flex">
+            <div role="group" aria-label="Shopper screens" className="hidden gap-1 lg:flex">
               {tabBtn("shop", "The shop")}
               {tabBtn("email", `${BRAND.shopperName}'s email`)}
             </div>
@@ -286,7 +290,7 @@ export function DemoApp({ products, fake, openCheckoutOnLoad }: { products: Prod
           </div>
 
           <div className={`flex min-w-0 flex-col gap-3 ${pane === "owner" ? "" : "hidden lg:flex"}`}>
-            {ownerNums && <OwnerPanel owner={ownerNums} carts={carts} currentId={view?.cart.id ?? null} />}
+            {owner && <OwnerPanel owner={owner} carts={carts} currentId={view?.cart.id ?? null} />}
             <Timeline view={view} />
           </div>
         </div>

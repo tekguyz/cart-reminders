@@ -16,7 +16,7 @@ export default async function DemoPage({ searchParams }: PageProps<"/demo">) {
   }
   if (down) {
     return (
-      <main className="mx-auto grid max-w-xl flex-1 place-items-center px-4 py-24 text-center">
+      <main id="main" className="mx-auto grid max-w-xl flex-1 place-items-center px-4 py-24 text-center">
         <div>
           <h1 className="font-display text-headline">The sample store is not connected.</h1>
           <p className="mt-3 text-muted">The demo&rsquo;s Shopify store did not answer. Try again in a moment.</p>

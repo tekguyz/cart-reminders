@@ -15,7 +15,7 @@ export default async function Back({ params }: PageProps<"/demo/back/[token]">) 
     .catch(() => null);
   if (!found || found.state.status === "paid") {
     return (
-      <main className="mx-auto grid max-w-xl flex-1 place-items-center px-4 py-24 text-center">
+      <main id="main" className="mx-auto grid max-w-xl flex-1 place-items-center px-4 py-24 text-center">
         <div>
           <h1 className="font-display text-headline">{found ? "That cart is already paid." : "This link has expired."}</h1>
           <p className="mt-3 text-muted">{BRAND.name} keeps a cart for a little while. Start a fresh one in the demo.</p>
