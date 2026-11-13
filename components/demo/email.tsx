@@ -46,7 +46,7 @@ export function ReminderEmail({ view }: { view: CartView | null }) {
         <StoreLogo />
         <h2 className="mt-5 font-shop text-[2rem] leading-[1.05] text-char">{c.headline}</h2>
         <p className="mt-3 text-body text-roast">{c.body}</p>
-        <ul className="mt-5 divide-y divide-[#F0E7D8] rounded-[10px] border border-shop-line bg-white px-3.5">
+        <ul className="mt-5 divide-y divide-shop-hair rounded-[10px] border border-shop-line bg-white px-3.5">
           {view.cart.lines.map((l) => (
             <li key={l.id} className="flex items-center gap-3 py-2.5 text-label">
               <ProductDrawing drawing={l.drawing} band={l.band} className="h-11 w-9" />
@@ -57,15 +57,15 @@ export function ReminderEmail({ view }: { view: CartView | null }) {
             </li>
           ))}
         </ul>
-        <a href={link} className="mt-6 inline-flex min-h-12 items-center rounded-[9px] bg-cherry px-6 text-label font-semibold text-white hover:bg-[#743026]">
+        <a href={link} className="mt-6 inline-flex min-h-12 items-center rounded-[9px] bg-cherry px-6 text-label font-semibold text-white hover:bg-cherry-deep">
           Back to your cart
         </a>
-        <p className="mt-4 text-micro text-[#8A7B6E]">
+        <p className="mt-4 text-micro text-roast">
           {sent === 1 ? "One more note tomorrow if the cart is still open, then we stop." : "That's the last reminder. It stops here."}
           {view.state.recoveryUrl && (
             <>
               {" · "}
-              <a href={view.state.recoveryUrl} target="_blank" rel="noreferrer" className="underline decoration-[#CDBDA8] underline-offset-2">
+              <a href={view.state.recoveryUrl} target="_blank" rel="noreferrer" className="underline decoration-shop-line underline-offset-2">
                 Stripe&rsquo;s own recovery page
               </a>
             </>

@@ -54,7 +54,7 @@ export function OwnerPanel({ owner, carts, currentId }: { owner: OwnerNumbers; c
       <p className="text-micro text-muted">{owner.orders} orders this week. Sample history plus your own carts. Paid orders land in the shop&rsquo;s Shopify store as test orders.</p>
       <ul className="-mx-4 sm:-mx-5">
         {mine.map((v) => (
-          <li key={v.cart.id} className={`arrive grid grid-cols-[1fr_auto] gap-x-3 border-t border-[#EEE8DC] px-4 py-2.5 text-label sm:px-5 ${v.cart.id === currentId ? "bg-[linear-gradient(90deg,var(--color-back-soft),transparent_75%)]" : ""}`}>
+          <li key={v.cart.id} className={`arrive grid grid-cols-[1fr_auto] gap-x-3 border-t border-hair px-4 py-2.5 text-label sm:px-5 ${v.cart.id === currentId ? "bg-[linear-gradient(90deg,var(--color-back-soft),transparent_75%)]" : ""}`}>
             <span className="font-semibold">You{v.state.orderName ? ` · order ${v.state.orderName}` : ""}</span>
             <span className="row-span-2 self-center">
               <Tag status={v.state.status} won={v.state.wonBack} />
@@ -63,7 +63,7 @@ export function OwnerPanel({ owner, carts, currentId }: { owner: OwnerNumbers; c
           </li>
         ))}
         {SAMPLE_CARTS.slice(0, 5).map((c) => (
-          <li key={c.who} className="grid grid-cols-[1fr_auto] gap-x-3 border-t border-[#EEE8DC] px-4 py-2.5 text-label sm:px-5">
+          <li key={c.who} className="grid grid-cols-[1fr_auto] gap-x-3 border-t border-hair px-4 py-2.5 text-label sm:px-5">
             <span className="font-semibold">
               {c.who} · {c.day}
             </span>

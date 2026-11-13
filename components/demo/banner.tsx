@@ -19,10 +19,10 @@ export function DemoBanner({ onReset }: { onReset: () => void }) {
   }
 
   return (
-    <aside aria-label="Demo" data-demo-banner className="bg-ink text-[#E8E2D8]">
+    <aside aria-label="Demo" data-demo-banner className="bg-ink text-paper-dim">
       <div className="mx-auto flex max-w-[90rem] flex-wrap items-center justify-between gap-x-6 px-4 text-label sm:px-6">
         <p className="flex items-center gap-3 py-2" role="status">
-          <span className="rounded-full bg-[#38322d] px-2.5 py-1 text-micro font-semibold text-white">Demo</span>
+          <span className="rounded-full bg-ink-soft px-2.5 py-1 text-micro font-semibold text-white">Demo</span>
           {done ? "A fresh cart. Back to the start." : "Sample shop. Test payments only. Nothing is sent."}
         </p>
         <div className="flex flex-wrap items-center gap-x-5">

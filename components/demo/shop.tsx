@@ -38,11 +38,11 @@ export function Shop(p: Props) {
   const count = open.reduce((t, l) => t + l.quantity, 0);
   return (
     <section aria-label={`${BRAND.name}, the sample shop`} className="overflow-hidden rounded-xl border border-line bg-bone">
-      <div className="flex items-center gap-2 border-b border-line bg-[#EFE9DE] px-3 py-2">
+      <div className="flex items-center gap-2 border-b border-line bg-sunk px-3 py-2">
         <span aria-hidden className="flex gap-1.5">
-          <i className="size-2.5 rounded-full bg-[#D3CBBB]" />
-          <i className="size-2.5 rounded-full bg-[#D3CBBB]" />
-          <i className="size-2.5 rounded-full bg-[#D3CBBB]" />
+          <i className="size-2.5 rounded-full bg-line" />
+          <i className="size-2.5 rounded-full bg-line" />
+          <i className="size-2.5 rounded-full bg-line" />
         </span>
         <span className="flex-1 truncate rounded-md bg-white px-2.5 py-1 text-micro text-muted">{BRAND.address}{p.screen === "shop" ? "" : p.screen === "cart" ? "/cart" : "/checkout"}</span>
       </div>
@@ -179,7 +179,7 @@ function CartScreen(p: Props) {
         <span className="text-roast">{pickupOnly ? "Pickup at the roastery (pinolillo and rosquillas are made here)." : "Pickup or shipping, picked at checkout."}</span>
         <span className="font-semibold tabular-nums">{money(p.view?.cart.subtotal ?? 0)}</span>
       </div>
-      <button type="button" disabled={p.busy} onClick={p.onCheckout} className={`${primaryButton} mt-5 w-full bg-cherry hover:bg-[#743026]`}>
+      <button type="button" disabled={p.busy} onClick={p.onCheckout} className={`${primaryButton} mt-5 w-full bg-cherry hover:bg-cherry-deep`}>
         {p.busy ? "Opening checkout…" : "Check out"}
       </button>
     </div>
