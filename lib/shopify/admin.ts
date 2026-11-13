@@ -1,12 +1,17 @@
+import { createHash } from "node:crypto";
 import type { Cart, DemoOrder, ShopAdmin } from "./types";
 import { SHOPIFY_API_VERSION } from "./version";
 
 // The Admin API: test orders written after a paid Stripe checkout, and the
 // daily cleanup. Server-only.
 
-/** The tag that ties a Shopify order to its Stripe Checkout Session. */
+/**
+ * The tag that ties a Shopify order to its Stripe Checkout Session. Shopify
+ * caps a tag at 40 characters and a session ID is about 66, so the tag holds
+ * a hash of it: "stripe-" plus 32 hex characters.
+ */
 export function sessionTag(sessionId: string): string {
-  return `stripe-${sessionId.replace(/[^A-Za-z0-9_]/g, "")}`;
+  return `stripe-${createHash("sha256").update(sessionId).digest("hex").slice(0, 32)}`;
 }
 
 const money = (c: number, currencyCode: string) => ({ shopMoney: { amount: (c / 100).toFixed(2), currencyCode } });

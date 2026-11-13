@@ -27,6 +27,13 @@ describe("admin order input", () => {
     expect(order.transactions[0]).toMatchObject({ kind: "SALE", status: "SUCCESS", test: true, gateway: "stripe", amountSet: { shopMoney: { amount: "45.00", currencyCode: "USD" } } });
   });
 
+  it("keeps the session tag within Shopify's 40-character limit, one tag per session", () => {
+    const real = "cs_test_a1Ox7yKJtVq3mD9ZbH2pRwL8sN5fEcU0gTiY6kAjXo4vQeMBnPzWdGhSlCr";
+    expect(sessionTag(real).length).toBeLessThanOrEqual(40);
+    expect(sessionTag(real)).toBe(sessionTag(real));
+    expect(sessionTag(real)).not.toBe(sessionTag(real + "x"));
+  });
+
   it("looks orders up by the session tag", async () => {
     const fetchMock = vi.fn(async () => new Response(JSON.stringify({ data: { orders: { nodes: [{ name: "#1001" }] } } })));
     const admin = createShopAdmin({ domain: "coq.myshopify.com", getToken: async () => "tok", fetch: fetchMock as unknown as typeof fetch });
