@@ -1,0 +1,468 @@
+{
+  "name": "cart-reminders",
+  "hideBanner": [
+    "Leave the demo"
+  ],
+  "themes": [
+    "light"
+  ],
+  "enter": [
+    {
+      "goto": "https://cart-reminders.vercel.app"
+    },
+    {
+      "click": "Try the demo"
+    },
+    {
+      "waitUrl": "**/demo"
+    },
+    {
+      "wait": 2500
+    }
+  ],
+  "screens": [
+    {
+      "name": "shop",
+      "device": "desktop",
+      "steps": []
+    },
+    {
+      "name": "cart",
+      "device": "desktop",
+      "steps": [
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Add Jinotega\"]"
+          }
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Cart,\"]"
+          }
+        },
+        {
+          "wait": 1500
+        }
+      ]
+    },
+    {
+      "name": "reminder",
+      "device": "desktop",
+      "steps": [
+        {
+          "click": {
+            "selector": "button:text-is(\"Check out\")"
+          }
+        },
+        {
+          "wait": 4000
+        },
+        {
+          "click": "Leave without paying"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Skip ahead\")"
+          }
+        },
+        {
+          "wait": 3000
+        }
+      ]
+    },
+    {
+      "name": "reminder",
+      "device": "phone",
+      "steps": [
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Add Jinotega\"]"
+          }
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Cart,\"]"
+          }
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Check out\")"
+          }
+        },
+        {
+          "wait": 4000
+        },
+        {
+          "click": "Leave without paying"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Skip ahead\")"
+          }
+        },
+        {
+          "wait": 3000
+        },
+        {
+          "scroll": 0
+        }
+      ]
+    },
+    {
+      "name": "store-owner",
+      "device": "phone",
+      "steps": [
+        {
+          "click": {
+            "selector": "[aria-label=\"Demo screens\"] button:has-text(\"Store owner\")"
+          }
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "scroll": 0
+        }
+      ]
+    },
+    {
+      "name": "shop",
+      "device": "feed",
+      "steps": [
+        {
+          "wait": 1000
+        },
+        {
+          "scrollTo": {
+            "selector": "section[aria-label$=\"the sample shop\"]"
+          },
+          "offset": 20
+        }
+      ]
+    },
+    {
+      "name": "reminder",
+      "device": "feed",
+      "steps": [
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Add Jinotega\"]"
+          }
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Cart,\"]"
+          }
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Check out\")"
+          }
+        },
+        {
+          "wait": 4000
+        },
+        {
+          "click": "Leave without paying"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Skip ahead\")"
+          }
+        },
+        {
+          "wait": 3000
+        },
+        {
+          "scrollTo": {
+            "selector": "section[aria-label=\"Dana's email\"]"
+          },
+          "offset": 20
+        }
+      ]
+    },
+    {
+      "name": "store-owner",
+      "device": "feed",
+      "steps": [
+        {
+          "click": {
+            "selector": "[aria-label=\"Demo screens\"] button:has-text(\"Store owner\")"
+          }
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "scrollTo": {
+            "selector": "section[aria-label=\"Store owner\"]"
+          },
+          "offset": 20
+        }
+      ]
+    },
+    {
+      "name": "shop",
+      "device": "stories",
+      "steps": [
+        {
+          "wait": 1000
+        },
+        {
+          "scrollTo": {
+            "selector": "section[aria-label$=\"the sample shop\"]"
+          },
+          "offset": 130
+        }
+      ]
+    },
+    {
+      "name": "reminder",
+      "device": "stories",
+      "steps": [
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Add Jinotega\"]"
+          }
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Cart,\"]"
+          }
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Check out\")"
+          }
+        },
+        {
+          "wait": 4000
+        },
+        {
+          "click": "Leave without paying"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Skip ahead\")"
+          }
+        },
+        {
+          "wait": 3000
+        },
+        {
+          "scrollTo": {
+            "selector": "section[aria-label=\"Dana's email\"]"
+          },
+          "offset": 130
+        }
+      ]
+    },
+    {
+      "name": "shop",
+      "device": "phone-card",
+      "steps": [
+        {
+          "wait": 1000
+        },
+        {
+          "scrollTo": {
+            "selector": "section[aria-label$=\"the sample shop\"]"
+          },
+          "offset": 20
+        }
+      ]
+    },
+    {
+      "name": "reminder",
+      "device": "phone-card",
+      "steps": [
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Add Jinotega\"]"
+          }
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Cart,\"]"
+          }
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Check out\")"
+          }
+        },
+        {
+          "wait": 4000
+        },
+        {
+          "click": "Leave without paying"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Skip ahead\")"
+          }
+        },
+        {
+          "wait": 3000
+        },
+        {
+          "scrollTo": {
+            "selector": "section[aria-label=\"Dana's email\"]"
+          },
+          "offset": 20
+        }
+      ]
+    },
+    {
+      "name": "store-owner",
+      "device": "phone-card",
+      "steps": [
+        {
+          "click": {
+            "selector": "[aria-label=\"Demo screens\"] button:has-text(\"Store owner\")"
+          }
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "scrollTo": {
+            "selector": "section[aria-label=\"Store owner\"]"
+          },
+          "offset": 20
+        }
+      ]
+    }
+  ],
+  "video": {
+    "device": "desktop",
+    "seconds": 4.5,
+    "steps": []
+  },
+  "hideText": [
+    "Built by TEKGUYZ"
+  ],
+  "hideSelector": [
+    "[data-demo-banner]",
+    "div.border-b.border-line:has(+ #main)"
+  ],
+  "css": "[aria-label=\"Demo screens\"] { opacity: 0; } @media (max-aspect-ratio: 3/5) { #main { padding-top: 120px; } }",
+  "reels": [
+    {
+      "name": "light",
+      "steps": [
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Add Jinotega\"]"
+          }
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button[aria-label^=\"Cart,\"]"
+          }
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Check out\")"
+          }
+        },
+        {
+          "wait": 4000
+        },
+        {
+          "click": "Leave without paying"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": {
+            "selector": "button:text-is(\"Skip ahead\")"
+          }
+        },
+        {
+          "wait": 3000
+        },
+        {
+          "scroll": 0
+        }
+      ],
+      "play": [
+        {
+          "hold": 2.5
+        },
+        {
+          "click": {
+            "selector": "[aria-label=\"Demo screens\"] button:has-text(\"Store owner\")"
+          },
+          "after": 1.5
+        },
+        {
+          "scrollTo": {
+            "selector": "section[aria-label=\"Store owner\"]"
+          },
+          "offset": 130,
+          "seconds": 1
+        },
+        {
+          "hold": 2
+        },
+        {
+          "scroll": "max",
+          "seconds": 3
+        },
+        {
+          "hold": 1.5
+        }
+      ]
+    }
+  ]
+}

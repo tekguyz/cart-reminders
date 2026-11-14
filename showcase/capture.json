@@ -1,11 +1,19 @@
 {
   "app": "cart-reminders",
-  "takenAt": "2026-11-13T08:48:18.419Z",
+  "takenAt": "2026-11-14T01:05:59.244Z",
   "pictures": [
     "shop-desktop-light",
     "cart-desktop-light",
     "reminder-desktop-light",
     "reminder-phone-light",
-    "store-owner-phone-light"
+    "store-owner-phone-light",
+    "shop-feed-light",
+    "reminder-feed-light",
+    "store-owner-feed-light",
+    "shop-stories-light",
+    "reminder-stories-light",
+    "shop-phone-card-light",
+    "reminder-phone-card-light",
+    "store-owner-phone-card-light"
   ]
 }
