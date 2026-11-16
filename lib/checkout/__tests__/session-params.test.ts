@@ -63,3 +63,9 @@ describe("test keys only", () => {
     expect(() => assertTestKey(undefined)).toThrow();
   });
 });
+
+describe("session ownership", () => {
+  it("marks the session as Cart Reminders'", () => {
+    expect(buildSessionParams(cart([line({})]), opts).metadata).toEqual({ cart_id: "gid://shopify/Cart/abc", app: "cart-reminders" });
+  });
+});

@@ -74,3 +74,11 @@ describe("storefront client", () => {
     await expect(shop.addLine("c", "v", 1, "1.1.1.1")).rejects.toThrow("Bad variant");
   });
 });
+
+describe("storefront scoping", () => {
+  it("lists only products not tagged coquimba-site", async () => {
+    const f = vi.fn().mockResolvedValue(new Response(JSON.stringify({ data: { products: { nodes: [] } } })));
+    await createStorefrontShop({ domain: "x.myshopify.com", token: "t", fetch: f }).listProducts();
+    expect(JSON.parse(f.mock.calls[0][1].body).query).toContain('query: "tag_not:coquimba-site"');
+  });
+});
