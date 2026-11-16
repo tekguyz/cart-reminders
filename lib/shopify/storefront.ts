@@ -111,7 +111,7 @@ export function createStorefrontShop({ domain, token, fetch: f = fetch }: Option
 
   return {
     async listProducts() {
-      const d = await gql<{ products: { nodes: ProductNode[] } }>(`query { products(first: 50, sortKey: CREATED_AT) { nodes { ${PRODUCT_FIELDS} variants(first: 10) { nodes { id title price { amount } } } } } }`, {});
+      const d = await gql<{ products: { nodes: ProductNode[] } }>(`query { products(first: 50, sortKey: CREATED_AT, query: "tag_not:coquimba-site") { nodes { ${PRODUCT_FIELDS} variants(first: 10) { nodes { id title price { amount } } } } } }`, {});
       return d.products.nodes.map(mapProduct);
     },
     async createCart(variantId, quantity, ip) {

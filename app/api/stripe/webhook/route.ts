@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { isOwnSession } from "@/lib/checkout/own-session";
 import { webhookMayComplete } from "@/lib/checkout/webhook-wait";
 import { getService } from "@/lib/demo/server";
 
@@ -17,6 +18,8 @@ export async function POST(req: Request) {
     return new Response("Bad signature", { status: 400 });
   }
   if (event.type === "checkout.session.completed") {
+    // The Stripe account is shared with Coquimba Coffee: skip its sessions.
+    if (!isOwnSession(event.data.object.metadata)) return Response.json({ received: true, ignored: true });
     // Too soon: the page is still writing the order. Stripe retries later.
     if (!webhookMayComplete(event.created, Math.floor(Date.now() / 1000))) return new Response("Not yet", { status: 503 });
     await getService().completeOrder(event.data.object.id, "127.0.0.1");

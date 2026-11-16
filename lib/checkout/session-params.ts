@@ -23,7 +23,7 @@ export function buildSessionParams(cart: Cart, { email, expiresAt, pickupLabel }
     customer_email: email,
     expires_at: expiresAt,
     after_expiration: { recovery: { enabled: true } },
-    metadata: { cart_id: cart.id },
+    metadata: { cart_id: cart.id, app: "cart-reminders" },
     line_items: cart.lines.map((l) => ({
       quantity: l.quantity,
       price_data: { currency, unit_amount: l.price, product_data: { name: l.productTitle, description: l.variantTitle } },
