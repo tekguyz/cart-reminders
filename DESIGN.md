@@ -42,7 +42,7 @@ The rulebook for every screen. Tokens live in `app/globals.css`; hex copies for 
 
 ## The idea
 
-Two things on one page. **Cart Reminders** (the app) is calm ink on warm paper with an italic serif, like a well-made printed card. **Coquimba Coffee** (the shop) lives inside it, in a small browser frame: cream paper, a volcano line under its header, and drawn coffee bags, one dusty color per region. The app frames the shop; they never share a color role.
+Two things on one page. **Cart Reminders** (the app) is calm ink on warm paper with an italic serif, like a well-made printed card. **Segovia Coffee** (the shop) lives inside it, in a small browser frame: cream paper, a volcano line under its header, and drawn coffee bags, one dusty color per region. The app frames the shop; they never share a color role.
 
 ## Color
 

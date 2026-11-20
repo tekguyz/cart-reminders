@@ -22,7 +22,7 @@
 
 ## What it does
 
-- Shows a made-up coffee roaster, Coquimba Coffee, whose products come from a Shopify store through the Storefront API.
+- Shows a made-up coffee roaster, Segovia Coffee, whose products come from a Shopify store through the Storefront API.
 - Keeps each visitor's cart in Shopify, so a cart outlives the visit.
 - Takes payment with Stripe's embedded checkout, in test mode only.
 - When the shopper leaves checkout, marks the cart as left and plans two reminders: one after 1 hour, one after 24 hours, then stops.
@@ -35,7 +35,7 @@
 - Never charges a card. Live Stripe keys are refused.
 - Never sends an email or a text. The reminder is shown on screen, marked "Not sent".
 - Never sets a cookie for the visitor. Cart IDs live in the page's own storage, so the demo works inside a frame (ADR 0002).
-- Never plays a real business. Coquimba Coffee is made up.
+- Never plays a real business. Segovia Coffee is made up.
 
 ## Stack
 

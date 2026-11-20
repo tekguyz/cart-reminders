@@ -2,7 +2,7 @@
 
 ## What this is
 
-The landing page and one-click demo for TEKGUYZ Custom Web Apps offerings 1 to 3 in `tekguyz-one` `brand/solutions.md`: online ordering and cart systems, headless e-commerce, and cart abandonment. The demo plays Coquimba Coffee, a made-up roaster in Miami that roasts coffee from Nicaragua. Built to `C:/Projects/claude-config/DEMO-STANDARD.md`. Tracking issue: #1. Design: `tekguyz-one` `docs/superpowers/specs/2026-11-12-cart-reminders-design.md`.
+The landing page and one-click demo for TEKGUYZ Custom Web Apps offerings 1 to 3 in `tekguyz-one` `brand/solutions.md`: online ordering and cart systems, headless e-commerce, and cart abandonment. The demo plays Segovia Coffee, a made-up roaster in Miami that roasts coffee from Nicaragua. Built to `C:/Projects/claude-config/DEMO-STANDARD.md`. Tracking issue: #1. Design: `tekguyz-one` `docs/superpowers/specs/2026-11-12-cart-reminders-design.md`.
 
 Next.js (App Router), Tailwind 4, Vitest, on Vercel. A real Shopify Partner development store and Stripe test mode (ADR 0001). Visitor state without cookies (ADR 0002).
 

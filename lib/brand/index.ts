@@ -23,13 +23,13 @@ export type Brand = {
   colors: typeof colors;
 };
 
-const coquimba: Brand = {
-  key: "coquimba",
-  name: "Coquimba Coffee",
-  address: "coquimba.example",
+const segovia: Brand = {
+  key: "segovia",
+  name: "Segovia Coffee",
+  address: "segovia.example",
   tagline: "Roasted in Miami. Grown in Nicaragua.",
   intro: "Ship to your door, or order ahead and pick up at the roastery.",
-  checkoutEmail: "dana.sample@coquimba.example",
+  checkoutEmail: "dana.sample@segovia.example",
   shopperName: "Dana",
   pickupLabel: "Pickup at the roastery",
   checkout: "stripe-embedded",
@@ -37,9 +37,9 @@ const coquimba: Brand = {
   colors,
 };
 
-const brands: Record<string, Brand> = { coquimba };
+const brands: Record<string, Brand> = { segovia };
 
-export function getBrand(key = process.env.BRAND ?? "coquimba"): Brand {
+export function getBrand(key = process.env.BRAND ?? "segovia"): Brand {
   const brand = brands[key];
   if (!brand) throw new Error(`Unknown BRAND "${key}"`);
   return brand;
