@@ -42,7 +42,7 @@ export default function OpengraphImage() {
         </div>
         <div style={{ display: "flex", width: 330, marginLeft: 30, alignItems: "center" }}>
           <div style={{ display: "flex", flexDirection: "column", width: 330, borderRadius: 20, background: colors.bone, color: colors.char, borderTop: `8px solid ${colors.cherry}`, padding: "26px 26px 28px", gap: 14 }}>
-            <span style={{ fontSize: 17, color: colors.muted }}>Coquimba Coffee · reminder</span>
+            <span style={{ fontSize: 17, color: colors.muted }}>Segovia Coffee · reminder</span>
             <span style={{ fontFamily: "Gloock", fontSize: 32, lineHeight: 1.1 }}>Your coffee is still waiting</span>
             <div style={{ display: "flex", alignItems: "center", gap: 14, background: "#fff", borderRadius: 12, padding: "10px 14px" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}

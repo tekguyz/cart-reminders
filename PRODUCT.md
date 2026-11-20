@@ -22,7 +22,7 @@ A store built to fit the business, not a plugin: the shop, the checkout and the 
 
 ## Operating Context
 
-The demo runs as Coquimba Coffee, a made-up coffee roaster in Miami. Products and carts come from a real Shopify store; payment is Stripe embedded checkout in test mode. A demo clock lets the visitor skip ahead 1 hour and 24 hours to read the two reminders.
+The demo runs as Segovia Coffee, a made-up coffee roaster in Miami. Products and carts come from a real Shopify store; payment is Stripe embedded checkout in test mode. A demo clock lets the visitor skip ahead 1 hour and 24 hours to read the two reminders.
 
 ## Capabilities and Constraints
 
@@ -35,7 +35,7 @@ The demo runs as Coquimba Coffee, a made-up coffee roaster in Miami. Products an
 
 - The shipped look in `DESIGN.md` is binding. This is a shipped demo: never restyle it or roll a new visual world unless the founder names this demo and asks for that (`claude-config/LOOKS.md`, rule 1).
 - Say: "The shopper left. The cart came back." "A store built to fit the business." "Reminders are drawn on screen, never sent."
-- Never say anything is sent or charged, or that Coquimba Coffee is real.
+- Never say anything is sent or charged, or that Segovia Coffee is real.
 
 ## Evidence on Hand
 

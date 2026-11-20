@@ -15,7 +15,7 @@ const line = (over: Partial<CartLine>): CartLine => ({
   ...over,
 });
 const cart = (lines: CartLine[]): Cart => ({ id: "gid://shopify/Cart/abc", lines, subtotal: 0, currency: "USD", attributes: [] });
-const opts = { email: "dana.sample@coquimba.example", expiresAt: 1_900_000_000, pickupLabel: "Pickup at the roastery" };
+const opts = { email: "dana.sample@segovia.example", expiresAt: 1_900_000_000, pickupLabel: "Pickup at the roastery" };
 
 describe("checkout session params", () => {
   it("is embedded, never redirects, recovers, and carries the cart", () => {

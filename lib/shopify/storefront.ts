@@ -33,11 +33,11 @@ type CartNode = {
 const PRODUCT_FIELDS = `
   id handle title
   featuredImage { url }
-  region: metafield(namespace: "coquimba", key: "region") { value }
-  notes: metafield(namespace: "coquimba", key: "notes") { value }
-  pickupOnly: metafield(namespace: "coquimba", key: "pickup_only") { value }
-  band: metafield(namespace: "coquimba", key: "band") { value }
-  drawing: metafield(namespace: "coquimba", key: "drawing") { value }
+  region: metafield(namespace: "segovia", key: "region") { value }
+  notes: metafield(namespace: "segovia", key: "notes") { value }
+  pickupOnly: metafield(namespace: "segovia", key: "pickup_only") { value }
+  band: metafield(namespace: "segovia", key: "band") { value }
+  drawing: metafield(namespace: "segovia", key: "drawing") { value }
 `;
 
 const CART_FIELDS = `

@@ -1,11 +1,11 @@
-// Loads the Coquimba Coffee catalog (lib/catalog/products.json) into the
+// Loads the Segovia Coffee catalog (lib/catalog/products.json) into the
 // Shopify development store in .env.local. Safe to rerun: products are found
 // by handle and updated, never duplicated.
 //
 //   npm run seed:shopify
 //
 // What it does, in order:
-// 1. Metafield definitions `coquimba.*`, readable by the Storefront API.
+// 1. Metafield definitions `segovia.*`, readable by the Storefront API.
 // 2. Each product, untracked stock, with its variants and metafields.
 // 3. Its label picture, drawn from lib/brand/marks.ts and rendered to PNG.
 // 4. Publishes each product to the Headless channel (or every channel the app can see).
@@ -47,7 +47,7 @@ async function definitions() {
   for (const f of FIELDS) {
     const d = await gql<{ metafieldDefinitionCreate: { userErrors: { message: string; code?: string }[] } }>(
       `mutation($d: MetafieldDefinitionInput!) { metafieldDefinitionCreate(definition: $d) { userErrors { message code } } }`,
-      { d: { namespace: "coquimba", key: f.key, name: f.name, type: f.type, ownerType: "PRODUCT", access: { storefront: "PUBLIC_READ" } } },
+      { d: { namespace: "segovia", key: f.key, name: f.name, type: f.type, ownerType: "PRODUCT", access: { storefront: "PUBLIC_READ" } } },
     );
     const errs = d.metafieldDefinitionCreate.userErrors.filter((e) => e.code !== "TAKEN");
     userErrors(`definition ${f.key}`, errs);
@@ -92,7 +92,7 @@ async function products() {
       title: p.title,
       handle: p.handle,
       status: "ACTIVE",
-      vendor: "Coquimba Coffee",
+      vendor: "Segovia Coffee",
       productType: p.pickupOnly ? "Roastery" : "Coffee",
       descriptionHtml: `<p>${p.notes}</p>`,
       productOptions: [{ name: optionName, values: p.variants.map((v) => ({ name: v.title })) }],
@@ -103,11 +103,11 @@ async function products() {
         inventoryItem: { tracked: false },
       })),
       metafields: [
-        { namespace: "coquimba", key: "region", type: "single_line_text_field", value: p.region ?? "" },
-        { namespace: "coquimba", key: "notes", type: "single_line_text_field", value: p.notes },
-        { namespace: "coquimba", key: "pickup_only", type: "boolean", value: String(p.pickupOnly) },
-        { namespace: "coquimba", key: "band", type: "single_line_text_field", value: p.band },
-        { namespace: "coquimba", key: "drawing", type: "single_line_text_field", value: p.drawing },
+        { namespace: "segovia", key: "region", type: "single_line_text_field", value: p.region ?? "" },
+        { namespace: "segovia", key: "notes", type: "single_line_text_field", value: p.notes },
+        { namespace: "segovia", key: "pickup_only", type: "boolean", value: String(p.pickupOnly) },
+        { namespace: "segovia", key: "band", type: "single_line_text_field", value: p.band },
+        { namespace: "segovia", key: "drawing", type: "single_line_text_field", value: p.drawing },
       ].filter((m) => m.value !== ""),
       ...(image ? { files: [{ originalSource: image, contentType: "IMAGE", alt: `${p.title} label` }] } : {}),
     };
