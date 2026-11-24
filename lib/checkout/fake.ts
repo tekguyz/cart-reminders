@@ -22,10 +22,10 @@ export function createFakeCheckout(): FakeCheckout {
     },
     async paid(sessionId) {
       const s = sessions.get(sessionId);
-      return { paid: !!s?.paid, cartId: s?.cartId ?? null, amountPaid: s?.amount ?? 0 };
+      return { paid: !!s?.paid, cartId: s?.cartId ?? null, amountPaid: s?.amount ?? 0, lines: null, shipping: null };
     },
     async countRecentSessions(sinceUnix) {
-      return [...sessions.values()].filter((s) => s.at >= sinceUnix).length;
+      return [...sessions.values()].filter((s) => s.at >= sinceUnix).length; // only ours exist here
     },
     pay(sessionId) {
       const s = sessions.get(sessionId);

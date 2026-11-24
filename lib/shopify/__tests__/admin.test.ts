@@ -15,7 +15,7 @@ const cart: Cart = {
 
 describe("admin order input", () => {
   it("is a paid test order tagged demo and with the session, for the amount paid", () => {
-    const { order, options } = orderInput(cart, "cs_test_123", 4500);
+    const { order, options } = orderInput(cart, "cs_test_123", { amountPaid: 4500, lines: null, shipping: null });
     expect(options).toEqual({ inventoryBehaviour: "BYPASS", sendReceipt: false, sendFulfillmentReceipt: false });
     expect(order.test).toBe(true);
     expect(order.financialStatus).toBe("PAID");
@@ -25,6 +25,26 @@ describe("admin order input", () => {
       { variantId: "gid://shopify/ProductVariant/22", quantity: 1 },
     ]);
     expect(order.transactions[0]).toMatchObject({ kind: "SALE", status: "SUCCESS", test: true, gateway: "stripe", amountSet: { shopMoney: { amount: "45.00", currencyCode: "USD" } } });
+  });
+
+  it("uses the lines and shipping Stripe charged for", () => {
+    const { order } = orderInput(cart, "cs_test_123", { amountPaid: 2600, lines: [{ variantId: "gid://shopify/ProductVariant/11", quantity: 1 }], shipping: { title: "Shipping", amount: 600 } });
+    expect(order.lineItems).toEqual([{ variantId: "gid://shopify/ProductVariant/11", quantity: 1 }]);
+    expect(order.shippingLines).toEqual([{ title: "Shipping", priceSet: { shopMoney: { amount: "6.00", currencyCode: "USD" } } }]);
+    expect("shippingLines" in orderInput(cart, "cs_test_123", { amountPaid: 4500, lines: null, shipping: null }).order).toBe(false);
+  });
+
+  it("counts only orders Shopify really deleted", async () => {
+    const fetchMock = vi.fn(async (_url: string, init: RequestInit) => {
+      const { query, variables } = JSON.parse(init.body as string);
+      if (query.includes("orders(")) return Response.json({ data: { orders: { nodes: [{ id: "o1", name: "#1" }, { id: "o2", name: "#2" }, { id: "o3", name: "#3" }] } } });
+      if (query.includes("orderCancel")) return Response.json({ data: { orderCancel: { userErrors: [] } } });
+      if (variables.id === "o1") return Response.json({ data: { orderDelete: { deletedId: "o1", userErrors: [] } } });
+      if (variables.id === "o2") return Response.json({ data: { orderDelete: { deletedId: null, userErrors: [{ message: "Order cannot be deleted" }] } } });
+      return new Response("boom", { status: 500 });
+    });
+    const admin = createShopAdmin({ domain: "coq.myshopify.com", getToken: async () => "tok", fetch: fetchMock as unknown as typeof fetch });
+    expect(await admin.deleteDemoOrdersBefore("2026-01-01T00:00:00Z")).toBe(1);
   });
 
   it("keeps the session tag within Shopify's 40-character limit, one tag per session", () => {

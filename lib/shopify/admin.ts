@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { Cart, DemoOrder, ShopAdmin } from "./types";
+import type { Cart, DemoOrder, PaidOrder, ShopAdmin } from "./types";
 import { SHOPIFY_API_VERSION } from "./version";
 
 // The Admin API: test orders written after a paid Stripe checkout, and the
@@ -16,10 +16,12 @@ export function sessionTag(sessionId: string): string {
 
 const money = (c: number, currencyCode: string) => ({ shopMoney: { amount: (c / 100).toFixed(2), currencyCode } });
 
-export function orderInput(cart: Cart, sessionId: string, amountPaid: number) {
+/** The order Stripe charged for: its lines and shipping, falling back to the cart's lines. */
+export function orderInput(cart: Cart, sessionId: string, { amountPaid, lines, shipping }: PaidOrder) {
   return {
     order: {
-      lineItems: cart.lines.map((l) => ({ variantId: l.variantId, quantity: l.quantity })),
+      lineItems: lines ?? cart.lines.map((l) => ({ variantId: l.variantId, quantity: l.quantity })),
+      ...(shipping ? { shippingLines: [{ title: shipping.title, priceSet: money(shipping.amount, cart.currency) }] } : {}),
       test: true,
       financialStatus: "PAID",
       tags: ["demo", sessionTag(sessionId)],
@@ -52,10 +54,10 @@ export function createShopAdmin({ domain, getToken, fetch: f = fetch }: Options)
   }
 
   return {
-    async createOrder(cart, sessionId, amountPaid) {
+    async createOrder(cart, sessionId, paid) {
       const d = await gql<{ orderCreate: { order: { name: string } | null; userErrors: { message: string }[] } }>(
         `mutation($order: OrderCreateOrderInput!, $options: OrderCreateOptionsInput) { orderCreate(order: $order, options: $options) { order { name } userErrors { message } } }`,
-        orderInput(cart, sessionId, amountPaid),
+        orderInput(cart, sessionId, paid),
       );
       if (d.orderCreate.userErrors.length || !d.orderCreate.order) throw new Error(d.orderCreate.userErrors.map((e) => e.message).join("; ") || "No order");
       return { name: d.orderCreate.order.name };
@@ -69,12 +71,15 @@ export function createShopAdmin({ domain, getToken, fetch: f = fetch }: Options)
     },
     async deleteDemoOrdersBefore(iso) {
       const old = await ordersMatching(`tag:demo created_at:<'${iso}'`, 100);
+      let deleted = 0;
       for (const o of old) {
-        // Some API versions delete only cancelled or archived orders.
+        // Some API versions delete only cancelled or archived orders, so a
+        // failed cancel is fine; only a delete with no userErrors counts.
         await gql(`mutation($id: ID!) { orderCancel(orderId: $id, reason: OTHER, refund: false, restock: false, notifyCustomer: false) { userErrors { message } } }`, { id: o.id }).catch(() => undefined);
-        await gql(`mutation($id: ID!) { orderDelete(orderId: $id) { userErrors { message } } }`, { id: o.id });
+        const d = await gql<{ orderDelete: { deletedId: string | null; userErrors: { message: string }[] } }>(`mutation($id: ID!) { orderDelete(orderId: $id) { deletedId userErrors { message } } }`, { id: o.id }).catch(() => null);
+        if (d && d.orderDelete.userErrors.length === 0 && d.orderDelete.deletedId) deleted++;
       }
-      return old.length;
+      return deleted;
     },
   };
 }

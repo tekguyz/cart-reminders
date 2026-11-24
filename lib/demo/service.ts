@@ -19,7 +19,7 @@ const MAX_CARTS = 20;
 export function createService({ shop, admin, checkout, secret, now = Date.now }: Deps) {
   const view = (cart: Cart): CartView => {
     const state = stateFromAttributes(cart.attributes);
-    const token = state.status === "shopping" ? null : signCartToken(cart.id, secret);
+    const token = state.status === "shopping" ? null : signCartToken(cart.id, secret, now());
     return { cart, state, token };
   };
 
@@ -85,7 +85,7 @@ export function createService({ shop, admin, checkout, secret, now = Date.now }:
         if (v.state.status === "paid") return v;
         let order = await admin.findOrderBySession(sessionId);
         if (!order && !overCap(await admin.countRecentDemoOrders(new Date(now() - 3600_000).toISOString()), ORDERS_PER_HOUR)) {
-          order = await admin.createOrder(v.cart, sessionId, paid.amountPaid);
+          order = await admin.createOrder(v.cart, sessionId, paid);
         }
         return save(v.cart.id, markPaid(v.state, order?.name ?? ""), ip);
       })();
@@ -98,7 +98,7 @@ export function createService({ shop, admin, checkout, secret, now = Date.now }:
     },
 
     async restore(token: string, ip: string): Promise<CartView | null> {
-      const cartId = verifyCartToken(token, secret);
+      const cartId = verifyCartToken(token, secret, now());
       return cartId ? load(cartId, ip) : null;
     },
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Cart, CartLine } from "@/lib/shopify/types";
-import { SHIPPING_CENTS, assertTestKey, buildSessionParams } from "../session-params";
+import { SHIPPING_CENTS, assertTestKey, buildSessionParams, paidLines, paidShipping } from "../session-params";
 
 const line = (over: Partial<CartLine>): CartLine => ({
   id: "l",
@@ -26,7 +26,7 @@ describe("checkout session params", () => {
 
   it("takes names, quantities and prices from the cart", () => {
     const p = buildSessionParams(cart([line({ quantity: 2, price: 2000, productTitle: "Madriz", variantTitle: "12 oz · Ground" })]), opts);
-    expect(p.line_items).toEqual([{ quantity: 2, price_data: { currency: "usd", unit_amount: 2000, product_data: { name: "Madriz", description: "12 oz · Ground" } } }]);
+    expect(p.line_items).toEqual([{ quantity: 2, price_data: { currency: "usd", unit_amount: 2000, product_data: { name: "Madriz", description: "12 oz · Ground", metadata: { variant_id: "v" } } } }]);
   });
 
   it("offers pickup and shipping for coffee only", () => {
@@ -67,5 +67,25 @@ describe("test keys only", () => {
 describe("session ownership", () => {
   it("marks the session as Cart Reminders'", () => {
     expect(buildSessionParams(cart([line({})]), opts).metadata).toEqual({ cart_id: "gid://shopify/Cart/abc", app: "cart-reminders" });
+  });
+});
+
+describe("what Stripe charged", () => {
+  const item = (variant_id: string | undefined, quantity = 1) => ({ quantity, price: { product: { metadata: variant_id ? { variant_id } : {} } } });
+
+  it("reads the Shopify lines from Stripe's line items", () => {
+    expect(paidLines([item("v1", 2), item("v2")])).toEqual([{ variantId: "v1", quantity: 2 }, { variantId: "v2", quantity: 1 }]);
+  });
+
+  it("is null when any line has no variant ID, or there are none", () => {
+    expect(paidLines([item("v1"), item(undefined)])).toBeNull();
+    expect(paidLines([{ quantity: 1, price: { product: "prod_1" } }])).toBeNull();
+    expect(paidLines([])).toBeNull();
+  });
+
+  it("reads the shipping picked, and none for free pickup", () => {
+    expect(paidShipping({ amount_total: SHIPPING_CENTS, shipping_rate: { display_name: "Shipping" } })).toEqual({ title: "Shipping", amount: SHIPPING_CENTS });
+    expect(paidShipping({ amount_total: 0, shipping_rate: { display_name: "Pickup" } })).toBeNull();
+    expect(paidShipping(null)).toBeNull();
   });
 });
