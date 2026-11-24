@@ -22,7 +22,7 @@ describe("fake shop", () => {
     const admin = createFakeAdmin();
     const [p] = await shop.listProducts();
     const cart = await shop.createCart(p.variants[0].id, 1, "ip");
-    const a = await admin.createOrder(cart, "cs_1", cart.subtotal);
+    const a = await admin.createOrder(cart, "cs_1", { amountPaid: cart.subtotal, lines: null, shipping: null });
     expect(await admin.findOrderBySession("cs_1")).toEqual(a);
     expect(await admin.findOrderBySession("cs_2")).toBeNull();
     expect(await admin.countRecentDemoOrders(new Date(0).toISOString())).toBe(1);

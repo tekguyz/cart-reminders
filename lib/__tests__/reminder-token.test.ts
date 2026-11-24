@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { signCartToken, verifyCartToken } from "../reminder-token";
+import { TOKEN_DAYS, signCartToken, verifyCartToken } from "../reminder-token";
 
 const cartId = "gid://shopify/Cart/hWN2abc?key=123";
 
@@ -21,5 +21,11 @@ describe("reminder link token", () => {
   });
   it("is safe in a URL path", () => {
     expect(signCartToken(cartId, "s3cret")).toMatch(/^[A-Za-z0-9_.-]+$/);
+  });
+  it("expires after TOKEN_DAYS", () => {
+    const t0 = 1_800_000_000_000;
+    const t = signCartToken(cartId, "s3cret", t0);
+    expect(verifyCartToken(t, "s3cret", t0 + (TOKEN_DAYS * 86400 - 1) * 1000)).toBe(cartId);
+    expect(verifyCartToken(t, "s3cret", t0 + TOKEN_DAYS * 86400 * 1000)).toBeNull();
   });
 });

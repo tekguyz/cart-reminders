@@ -1,11 +1,11 @@
-import type { Cart } from "@/lib/shopify/types";
+import type { Cart, PaidOrder } from "@/lib/shopify/types";
 
 // Checkout sits behind one switch (the brand's `checkout` kind). The demo is
 // Stripe's embedded Checkout; a real store would use Shopify's own checkout.
 
 export type StartedCheckout = { sessionId: string; clientSecret: string };
 
-export type PaidCheckout = { paid: boolean; cartId: string | null; amountPaid: number };
+export type PaidCheckout = PaidOrder & { paid: boolean; cartId: string | null };
 
 export interface Checkout {
   kind: "stripe" | "fake";

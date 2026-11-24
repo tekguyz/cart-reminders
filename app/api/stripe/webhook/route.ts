@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { STRIPE_API_VERSION } from "@/lib/checkout/stripe-version";
 import { isOwnSession } from "@/lib/checkout/own-session";
 import { webhookMayComplete } from "@/lib/checkout/webhook-wait";
 import { getService } from "@/lib/demo/server";
@@ -13,7 +14,7 @@ export async function POST(req: Request) {
   if (!secret || !key) return new Response("Not set up", { status: 503 });
   let event: Stripe.Event;
   try {
-    event = new Stripe(key).webhooks.constructEvent(await req.text(), req.headers.get("stripe-signature") ?? "", secret);
+    event = new Stripe(key, { apiVersion: STRIPE_API_VERSION }).webhooks.constructEvent(await req.text(), req.headers.get("stripe-signature") ?? "", secret);
   } catch {
     return new Response("Bad signature", { status: 400 });
   }
@@ -22,7 +23,8 @@ export async function POST(req: Request) {
     if (!isOwnSession(event.data.object.metadata)) return Response.json({ received: true, ignored: true });
     // Too soon: the page is still writing the order. Stripe retries later.
     if (!webhookMayComplete(event.created, Math.floor(Date.now() / 1000))) return new Response("Not yet", { status: 503 });
-    await getService().completeOrder(event.data.object.id, "127.0.0.1");
+    // No buyer is on the line here, so no buyer IP goes to Shopify.
+    await getService().completeOrder(event.data.object.id, "");
   }
   return Response.json({ received: true });
 }

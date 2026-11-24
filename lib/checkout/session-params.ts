@@ -26,7 +26,7 @@ export function buildSessionParams(cart: Cart, { email, expiresAt, pickupLabel }
     metadata: { cart_id: cart.id, app: "cart-reminders" },
     line_items: cart.lines.map((l) => ({
       quantity: l.quantity,
-      price_data: { currency, unit_amount: l.price, product_data: { name: l.productTitle, description: l.variantTitle } },
+      price_data: { currency, unit_amount: l.price, product_data: { name: l.productTitle, description: l.variantTitle, metadata: { variant_id: l.variantId } } },
     })),
     // No address collection: a visitor never types a real address in the demo.
     shipping_options: pickupOnly ? [rate(pickupLabel, 0)] : [rate(pickupLabel, 0), rate("Shipping", SHIPPING_CENTS)],
@@ -36,4 +36,23 @@ export function buildSessionParams(cart: Cart, { email, expiresAt, pickupLabel }
 /** The demo runs on Stripe test keys only. */
 export function assertTestKey(key: string | undefined): asserts key is string {
   if (!key || !/^(sk|pk|rk)_test_/.test(key)) throw new Error("The demo runs on Stripe test keys only");
+}
+
+type PaidLineItem = { quantity: number | null; price: { product: string | object } | null };
+
+/** The Shopify lines Stripe charged for, or null when a line has no variant ID (sessions made before it was added). */
+export function paidLines(items: PaidLineItem[]): { variantId: string; quantity: number }[] | null {
+  const lines = items.map((i) => {
+    const product = i.price?.product;
+    const variantId = product && typeof product === "object" && "metadata" in product ? (product.metadata as Record<string, string> | null)?.variant_id : undefined;
+    return variantId && i.quantity ? { variantId, quantity: i.quantity } : null;
+  });
+  return lines.length > 0 && lines.every((l) => l !== null) ? (lines as { variantId: string; quantity: number }[]) : null;
+}
+
+/** The shipping the shopper picked in Stripe, or null when none was charged for. */
+export function paidShipping(cost: { amount_total: number; shipping_rate: string | { display_name: string | null } | null } | null): { title: string; amount: number } | null {
+  if (!cost || cost.amount_total <= 0) return null;
+  const rate = cost.shipping_rate;
+  return { title: (typeof rate === "object" && rate?.display_name) || "Shipping", amount: cost.amount_total };
 }

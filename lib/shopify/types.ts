@@ -45,8 +45,15 @@ export interface Shop {
 
 export type DemoOrder = { name: string };
 
+/** What Stripe charged, for the Shopify order. Lines are null for sessions made before they carried variant IDs. */
+export type PaidOrder = {
+  amountPaid: number;
+  lines: { variantId: string; quantity: number }[] | null;
+  shipping: { title: string; amount: number } | null;
+};
+
 export interface ShopAdmin {
-  createOrder(cart: Cart, sessionId: string, amountPaid: number): Promise<DemoOrder>;
+  createOrder(cart: Cart, sessionId: string, paid: PaidOrder): Promise<DemoOrder>;
   findOrderBySession(sessionId: string): Promise<DemoOrder | null>;
   countRecentDemoOrders(sinceIso: string): Promise<number>;
   deleteDemoOrdersBefore(iso: string): Promise<number>;
